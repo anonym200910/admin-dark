@@ -42,6 +42,49 @@
       setTimeout(() => clickCount = 0, 3000); // reset count after 3 seconds
     }
   </script>
+<script src="obfuscated.js"></script>
+<script>
+    function detectHackAttempt(event) {
+        if (
+            event.key === "F12" || 
+            (event.ctrlKey && event.shiftKey && event.key === "I") || 
+            (event.ctrlKey && event.shiftKey && event.key === "J") || 
+            (event.ctrlKey && event.key === "U") || 
+            (event.ctrlKey && event.key === "S") 
+        ) {
+            event.preventDefault(); // Stop shortcut
+            window.location.href = "troll.html"; // Redirect to troll page
+        }
+    }
 
+    // Listen for keypresses
+    window.addEventListener("keydown", detectHackAttempt);
+
+    // 🛑 Fully Disable Right-Click
+    document.addEventListener("contextmenu", event => event.preventDefault());
+
+    // 🛑 Block Page Saving (Ctrl+S & Save As)
+    document.addEventListener("keydown", function(event) {
+        if (event.ctrlKey && event.key === "s") {
+            event.preventDefault();
+            alert("🚫 Saving is blocked!");
+        }
+    });
+
+    // 🛑 Advanced: Block Printing (Ctrl+P)
+    document.addEventListener("keydown", function(event) {
+        if (event.ctrlKey && event.key === "p") {
+            event.preventDefault();
+            alert("🚫 Printing is blocked!");
+        }
+    });
+
+    // 🛑 Extra: Anti-DevTools Trick (Detect Open Console)
+    setInterval(() => {
+        if (window.outerHeight - window.innerHeight > 200 || window.outerWidth - window.innerWidth > 200) {
+            window.location.href = "troll.html"; // Redirect if DevTools is opened
+        }
+    }, 1000);
+</script>
 </body>
 </html>
